@@ -271,8 +271,6 @@ function buildPrompt(state: EditorState, language: string): string {
   return buildEnPrompt(state);
 }
 
-const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
-
 /**
  * Calls the Gemini API to edit an image based on the provided editor state.
  * @param state The current state of the editor controls.
@@ -280,11 +278,21 @@ const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
  * @returns A promise that resolves to a GeminiResponse object containing the edited image and JSON data.
  */
 export const generateImageEdit = async (state: EditorState, language: string): Promise<GeminiResponse> => {
+  // Security Check: Ensure API key is present in environment before making any calls.
+  if (!process.env.API_KEY) {
+    throw new Error("API Key not found. Please ensure process.env.API_KEY is configured.");
+  }
+
+  // Initialize the client inside the function to use the current environment variable.
+  // This prevents issues with strict-mode checking and ensures the key is not leaked in global scope.
+  const ai = new GoogleGenAI({apiKey: process.env.API_KEY});
+
   if (!state.base_image) {
     throw new Error("Base image is missing.");
   }
 
-  const imageEditModel = 'gemini-2.5-flash-image-preview';
+  // Use the standard Flash Image model for efficiency and cost-effectiveness.
+  const imageEditModel = 'gemini-2.5-flash-image';
 
   const parts: Part[] = [];
 

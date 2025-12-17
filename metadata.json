@@ -1,5 +1,5 @@
 {
-  "name": "Arch_01_Interior Material & Color Editor",
+  "name": "Ref_02_Interior Material & Color Editor",
   "description": "Upload an interior photo and non-destructively replace wall/ceiling/cabinet/floor materials, lighting color/CCT, and optionally bathroom fixtures. Supports exact HEX/RGB colors, texture uploads, masks, and reproducible seeds. Exports crisp 16:9 images for proposals.",
   "requestFramePermissions": []
 }
